@@ -60,18 +60,19 @@ const createDefaultAdmin = async () => {
   try {
     const adminExists = await User.findOne({ role: 'admin' });
     if (!adminExists) {
-      const adminEmail = process.env.DEFAULT_ADMIN_EMAIL || 'admin@cyberverse.com';
-      const adminPassword = process.env.DEFAULT_ADMIN_PASSWORD || 'Admin@Secure2026!';
+      const adminEmail = process.env.DEFAULT_ADMIN_EMAIL;
+      const adminPassword = process.env.DEFAULT_ADMIN_PASSWORD;
       const adminName = process.env.DEFAULT_ADMIN_NAME || 'Platform Admin';
 
-      const bcrypt = require('bcryptjs');
-      const salt = await bcrypt.genSalt(12);
-      const hashedPassword = await bcrypt.hash(adminPassword, salt);
-      
+      if (!adminEmail || !adminPassword) {
+        console.warn('⚠️ No DEFAULT_ADMIN_EMAIL or DEFAULT_ADMIN_PASSWORD set in environment. Skipping default admin initialization.');
+        return;
+      }
+
       const admin = new User({
         name: adminName,
         email: adminEmail,
-        password: hashedPassword,
+        password: adminPassword,
         role: 'admin',
         isPremium: true
       });
@@ -194,7 +195,7 @@ app.get('/api/user-stats', async (req, res) => {
   try {
     // Return placeholder user stats until DB aggregation is active
     res.json({
-      user: { name: 'Admin User', email: process.env.DEFAULT_ADMIN_EMAIL || 'admin@cyberverse.local' },
+      user: { name: 'Admin User', email: process.env.DEFAULT_ADMIN_EMAIL || '' },
       recentActivity: [],
       weeklyStats: { labsCompleted: 0, pointsEarned: 0, timeSpent: '0h', rankChange: 0 }
     });
