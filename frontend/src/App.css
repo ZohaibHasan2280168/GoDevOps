@@ -1,0 +1,491 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Performance optimizations */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Base colors and theme */
+@layer base {
+  :root {
+    --bg: 11 15 19;
+    --surface: 15 23 32;
+    --panel: 17 24 39;
+    --text: 230 238 246;
+    --muted: 148 163 184;
+    --primary: 255 102 0;
+    --primary-700: 255 133 51;
+    --accent: 6 182 212;
+    --accent-2: 139 92 246;
+    --success: 16 185 129;
+    --warning: 245 158 11;
+    --danger: 239 68 68;
+    --glass: rgba(255,255,255,0.03);
+    --card-border: rgba(255,255,255,0.04);
+    --focus-ring: 255 102 0;
+  }
+}
+
+body{
+  background: linear-gradient(180deg, rgb(var(--bg)) 0%, rgb(8 12 16) 100%);
+  color: rgb(var(--text));
+  font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Smooth transitions for better UX */
+@layer components {
+  .smooth-transition {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .navbar { background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent); border-bottom: 1px solid var(--card-border); backdrop-filter: blur(8px); }
+  .btn-primary { background: linear-gradient(90deg, rgb(var(--primary)), rgb(var(--primary-700))); color: #fff; box-shadow: 0 6px 20px rgba(255,102,0,0.12); border-radius: 10px; padding: 0.6rem 1rem; }
+  .btn-primary:hover { transform: translateY(-2px); }
+  .btn-ghost { background: transparent; border: 1px solid rgba(var(--text),0.06); color: rgb(var(--text)); }
+  .tag-accent { background: linear-gradient(90deg, rgba(var(--accent),0.12), rgba(var(--accent-2),0.08)); color: rgb(var(--text)); padding: 0.25rem 0.5rem; border-radius: 999px; font-weight: 600; }
+
+  .glass-effect {
+    background: rgba(30, 41, 59, 0.4);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(51, 65, 85, 0.3);
+  }
+  
+  .glow-effect {
+    box-shadow: 0 0 20px -5px rgba(56, 189, 248, 0.3);
+  }
+  
+  .gradient-text {
+    background: linear-gradient(90deg, rgb(var(--primary)), rgb(var(--accent)));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .card {
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+  }
+
+  /* Labs page search bar and filters */
+  .labs-search-input {
+    background-color: rgba(255, 255, 255, 0.05); /* almost transparent dark background */
+    color: #ffffff; /* white text */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .labs-search-input::placeholder {
+    color: #aaaaaa; /* light grey placeholder */
+  }
+
+  .labs-dropdown {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .labs-dropdown option {
+    background-color: #1e293b; /* dark dropdown options */
+    color: #ffffff;
+  }
+}
+
+/* Ultra-smooth scrolling optimizations */
+* {
+  -webkit-transform: translate3d(0,0,0);
+  transform: translate3d(0,0,0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-perspective: 1000px;
+  perspective: 1000px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Force hardware acceleration */
+.page-container {
+  transform: translate3d(0,0,0);
+  -webkit-transform: translate3d(0,0,0);
+  will-change: scroll-position;
+  contain: layout style paint;
+}
+
+/* Optimize all interactive elements */
+.card, .button, .grid-item, .list-item {
+  transform: translate3d(0,0,0);
+  -webkit-transform: translate3d(0,0,0);
+  will-change: transform;
+  contain: layout style paint;
+}
+
+/* Optimize specific elements */
+.card, .button, .nav-item, .grid-item {
+  will-change: transform;
+  contain: layout style paint;
+}
+
+/* Smooth transforms */
+.hover\:scale-105:hover {
+  transform: scale(1.05) translateZ(0);
+}
+
+.hover\:translate-x-1:hover {
+  transform: translateX(0.25rem) translateZ(0);
+}
+
+.hover\:translate-y-1:hover {
+  transform: translateY(0.25rem) translateZ(0);
+}
+
+/* Ultra-optimized scrolling */
+html {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  overflow-x: hidden;
+  will-change: scroll-position;
+  transform: translate3d(0,0,0);
+  -webkit-transform: translate3d(0,0,0);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeSpeed;
+}
+
+/* Disable problematic animations during scroll */
+.scrolling * {
+  pointer-events: none !important;
+  animation-play-state: paused !important;
+  transition: none !important;
+}
+
+/* Re-enable after scroll */
+.scroll-ended * {
+  pointer-events: auto !important;
+  animation-play-state: running !important;
+  transition: all 0.15s ease-out !important;
+}
+
+/* Performance optimized transitions */
+.will-change-transform {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+.will-change-auto {
+  will-change: auto;
+}
+
+/* Optimize common animations */
+.animate-spin {
+  animation: spin 1s linear infinite;
+  will-change: transform;
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  will-change: opacity;
+}
+
+.animate-bounce {
+  animation: bounce 1s infinite;
+  will-change: transform;
+}
+
+/* Smooth hover effects with GPU acceleration */
+.group:hover .group-hover\:translate-x-1 {
+  transform: translateX(0.25rem) translateZ(0);
+}
+
+/* Optimize animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px) translateZ(0); }
+  to { opacity: 1; transform: translateY(0) translateZ(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Ultra-fast animations only */
+*, *::before, *::after {
+  animation-duration: 0.1s !important;
+  animation-delay: 0s !important;
+  transition-duration: 0.1s !important;
+  transition-delay: 0s !important;
+  transition-timing-function: ease-out !important;
+}
+
+/* Disable animations on scroll */
+@media (prefers-reduced-motion: no-preference) {
+  .scrolling * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Keep only essential smooth transitions */
+.nav-link, .button, .card {
+  transition: all 0.15s ease-out !important;
+  transform: translateZ(0);
+}
+
+/* Optimize scrolling */
+.scroll-smooth {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Better text rendering */
+h1, h2, h3, h4, h5, h6 {
+  color: rgb(var(--text));
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+p {
+  color: rgb(var(--muted));
+  line-height: 1.6;
+}
+
+/* Improved focus states */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+:focus-visible {
+  outline: 3px solid rgba(var(--focus-ring),0.14);
+  outline-offset: 2px;
+  box-shadow: 0 6px 30px rgba(var(--primary),0.08);
+}
+
+/* Optimized custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(var(--bg));
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgb(var(--primary)), rgb(var(--accent)));
+  border-radius: 3px;
+  will-change: background;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, rgb(var(--primary-700)), rgb(var(--accent)));
+}
+
+/* Intersection Observer optimization */
+.lazy-load {
+  opacity: 0;
+  transform: translateY(20px) translateZ(0);
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+
+.lazy-load.loaded {
+  opacity: 1;
+  transform: translateY(0) translateZ(0);
+}
+
+/* Virtual list optimization */
+.virtual-item {
+  contain: layout style paint;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Grid performance optimization */
+.grid {
+  contain: layout;
+}
+
+.grid > * {
+  contain: layout style paint;
+  transform: translateZ(0);
+}
+
+/* Optimize large lists */
+.virtual-grid {
+  contain: strict;
+  will-change: scroll-position;
+}
+
+.virtual-grid-item {
+  contain: layout style paint;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Optimize images */
+img {
+  will-change: opacity;
+  contain: layout;
+}
+
+img[loading="lazy"] {
+  content-visibility: auto;
+}
+
+/* Optimize forms */
+input, textarea, select {
+  will-change: border-color, box-shadow;
+  contain: layout style;
+}
+
+/* Optimize buttons */
+button {
+  will-change: background-color, transform;
+  contain: layout style;
+  transform: translateZ(0);
+}
+
+.card:hover {
+  transform: translateY(-2px) translateZ(0);
+}
+
+/* Loading states */
+.loading {
+  background: linear-gradient(90deg, #334155 25%, #475569 50%, #334155 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+  
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .glass-effect {
+    background: rgba(15, 23, 42, 0.9);
+    border: 2px solid rgba(56, 189, 248, 0.8);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+    transform: none !important;
+  }
+  
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Performance hints for browsers */
+.container {
+  contain: layout;
+}
+
+.section {
+  contain: layout style;
+}
+
+/* Optimize font rendering */
+@font-face {
+  font-display: swap;
+}
+
+/* Critical performance optimizations */
+.performance-optimized {
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+  perspective: 1000px;
+  contain: layout style paint;
+}
+
+/* Page-specific optimizations */
+.page-container {
+  contain: layout;
+  will-change: scroll-position;
+}
+
+.section {
+  contain: layout style;
+}
+
+.component {
+  contain: layout style paint;
+  transform: translateZ(0);
+}
+
+/* Optimize navigation */
+.nav-link {
+  will-change: color, background-color;
+  contain: layout style;
+  transform: translateZ(0);
+}
+
+/* Optimize modals and overlays */
+.modal, .overlay {
+  will-change: opacity, transform;
+  contain: layout style paint;
+  transform: translateZ(0);
+}
+
+/* Optimize tooltips */
+.tooltip {
+  will-change: opacity, transform;
+  contain: layout style paint;
+  transform: translateZ(0);
+}
+
+/* Content visibility for off-screen content */
+.lazy-content {
+  content-visibility: auto;
+  contain-intrinsic-size: 200px;
+}
+
+/* Optimize tables */
+table {
+  contain: layout;
+}
+
+tbody tr {
+  contain: layout style;
+}
+
+/* Optimize lists */
+ul, ol {
+  contain: layout;
+}
+
+li {
+  contain: layout style;
+  transform: translateZ(0);
+}
