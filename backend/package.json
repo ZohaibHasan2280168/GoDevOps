@@ -1,7 +1,7 @@
 {
-  "name": "go-cyber-backend",
+  "name": "godevops-backend",
   "version": "1.0.0",
-  "description": "Go-Cyber Learning Platform Backend API",
+  "description": "GoDevOps Hands-on DevOps Learning Platform Backend API",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -37,6 +37,6 @@
     "api",
     "authentication"
   ],
-  "author": "Go-Cyber Team",
+  "author": "GoDevOps Team",
   "license": "MIT"
 }

@@ -1,26 +1,26 @@
-# Project Memory & Architectural State: Go-Cyber
+# Project Memory & Architectural State: GoDevOps
 
 ---
 
 ## 1. Project Snapshot
 
-* **Project Name:** Go-Cyber
-* **Workspace Path:** `/home/harry/Devops/Projects/go-cyber`
-* **Current Phase:** Phase 1 (Completed) ➔ Transitioning to Phase 2 (Dockerization)
-* **Active Environment:** Hybrid Local Setup (Node 20 LTS on host + MongoDB 7.0 in Docker container)
-* **Git Branch:** `main` (Initial clean commit `feat(init)` + Security hardening commit)
+* **Project Name:** GoDevOps
+* **Workspace Path:** `/home/harry/Devops/Projects/go-devops`
+* **Current Phase:** Phase 1 (Completed) ➔ Transitioning to Phase 2 (Dockerization & Docker Compose)
+* **Active Environment:** Hybrid Local Setup (Node 20 LTS on host + MongoDB 7.0 in Docker container `go-devops-mongo`)
+* **Git Branch:** `main`
 
 ---
 
 ## 2. Architectural Decision Records (ADRs)
 
-### ADR-001: Project Renaming & Kebab-Case Standard
-* **Context:** Original repository was named `CyberVerseWeb` with author history.
-* **Decision:** Renamed workspace to `go-cyber`. Adopted strict kebab-case for Docker containers, Kubernetes manifests, and cloud resources.
-* **Consequence:** Full privacy from original repository and compliance with RFC 1123 naming rules for Kubernetes and Docker tags.
+### ADR-001: Project Identity & Kebab-Case Standard
+* **Context:** Original repository was named `CyberVerseWeb`.
+* **Decision:** Renamed workspace to `go-devops`. Adopted strict kebab-case for Docker containers (`go-devops-mongo`), Kubernetes manifests, and cloud resources.
+* **Consequence:** Clean professional branding, complete separation from original repo, and compliance with RFC 1123 naming rules for Kubernetes and Docker tags.
 
 ### ADR-002: Shift-Left Repository Sanitization
-* **Context:** Previous `.git` directory contained author personal commit logs, email references, and local Windows filepaths.
+* **Context:** Previous `.git` directory contained author personal commit logs, email references, and local filepaths.
 * **Decision:** Wiped old `.git` directory completely, deleted stale `frontend/out` build artifacts, and initialized a fresh Git repository.
 * **Consequence:** 100% clean, production-ready Git history.
 
@@ -44,6 +44,11 @@
 * **Decision:** Created `LOCAL_ACCESS_GUIDE.md` and added it to `.gitignore`.
 * **Consequence:** User has complete operational documentation locally while preventing credential leaks to GitHub.
 
+### ADR-007: Domain Pivot to Hands-on DevOps Learning Platform
+* **Context:** Original domain was generic cybersecurity/CTF. User decided to pivot the platform into a dedicated **DevOps, Cloud & Infrastructure Engineering Learning Platform (GoDevOps)**.
+* **Decision:** Rebranded UI, updated navigation, aligned backend models to include `Linux`, `Docker`, `Kubernetes`, `CI/CD`, and `Terraform` tracks. Authored `backend/scripts/createDevOpsRooms.js` and seeded 5 comprehensive challenge rooms into MongoDB.
+* **Consequence:** Unique, compelling, industry-relevant portfolio project for DevOps engineering roles.
+
 ---
 
 ## 3. Resolved Issues & Troubleshooting Log
@@ -51,6 +56,7 @@
 | Issue | Root Cause | Solution Applied |
 | :--- | :--- | :--- |
 | `node: command not found` | Host machine did not have Node.js installed | Installed NVM v0.40.1 and Node 20.20.2 LTS with default alias. |
-| `User validation failed: email` | In `models/User.js`, regex required standard TLD (`.com`, `.net`) | Changed seed email domain from `.local` to `admin@cyberverse.com`. |
+| `User validation failed: email` | In `models/User.js`, regex required standard TLD (`.com`, `.net`) | Changed seed email domain from `.local` to `admin@godevops.com`. |
 | `Invalid credentials` on admin login | Double-hashing in `server.js` + `User.js` pre-save hook | Removed manual bcrypt call in `server.js`; allowed Mongoose pre-save to hash once. |
 | `Port 3001 in use` on Vite start | Hardcoded HMR WebSocket port in `vite.config.js` | Removed hardcoded HMR port 3001, allowing Vite to use standard dynamic WebSocket. |
+| Duplicate schema index on `slug` warning | Mongoose `unique: true` on field + manual `schema.index({ slug: 1 })` | Removed redundant `roomSchema.index({ slug: 1 })` from `models/Room.js`. |

@@ -1,10 +1,10 @@
-# System Architecture: Go-Cyber
+# System Architecture: GoDevOps
 
 ---
 
 ## 1. High-Level Architecture Overview
 
-Go-Cyber implements an enterprise **3-Tier Cloud-Native Architecture** designed for high security, horizontal scalability, and full containerization across local and cloud environments.
+GoDevOps implements an enterprise **3-Tier Cloud-Native Architecture** designed for high security, horizontal scalability, and full containerization across local and cloud environments.
 
 ```mermaid
 flowchart TB
@@ -17,7 +17,7 @@ flowchart TB
         FE -->|REST API :5000 /api| BE["Tier 2: Backend (Node.js 20 + Express)"]
         BE --> AUTH["Auth Engine (JWT + Bcrypt)"]
         BE --> TOTP["2FA TOTP Engine (Speakeasy + QR)"]
-        BE --> CTF["CTF Room & Lab Progression Engine"]
+        BE --> CURRICULUM["DevOps Learning Engine (Linux, Docker, K8s, CI/CD, IaC)"]
     end
 
     subgraph Storage_Tier ["State & Database Layer"]
@@ -41,9 +41,9 @@ flowchart TB
 ### 2.1. Tier 1: Frontend Presentation Layer
 * **Technology:** React 18, Vite 6, Tailwind CSS, Radix UI Primitives, Lucide Icons, Recharts.
 * **Responsibilities:**
-  * Interactive Cybersecurity Student Dashboard.
-  * Hands-on Rooms and CTF Challenge Explorer.
-  * Quiz taking, progress tracking, and leaderboard visualization.
+  * Interactive DevOps Engineer Dashboard.
+  * Hands-on Rooms and Challenge Explorer (Linux, Docker, Kubernetes, CI/CD, Terraform).
+  * Quiz taking, command validation, progress tracking, and leaderboard visualization.
   * Secure Admin Management Portal (`/secure-admin-portal`).
   * 2FA QR code display and TOTP setup wizard.
 * **Development Port:** `5173` (Vite dev server).
@@ -54,7 +54,7 @@ flowchart TB
 * **Responsibilities:**
   * REST API routing (`/api/auth`, `/api/admin`, `/api/rooms`, `/api/progress`, `/api/2fa`).
   * JWT Token signing and verification (`JWT_SECRET`).
-  * Two-Factor Authentication via Speakeasy (TOTP standards).
+  * Two-Factor Authentication via Speakeasy (TOTP RFC 6238 standards).
   * Rate limiting, helmet security headers, and cookie parsing.
 * **Development Port:** `5000`.
 * **Security Hardening:** Runs strictly as non-root user (`USER node` in Docker), zero hardcoded secrets.
@@ -63,9 +63,9 @@ flowchart TB
 * **Technology:** MongoDB 7.0 Community Edition.
 * **Responsibilities:**
   * User profiles, role-based access control (Admin vs User), and password hashes (bcrypt salt rounds 12).
-  * Room definitions, topics, quiz questions, flags, and exercises.
+  * DevOps room definitions, topics, quiz questions, flags, and practical exercises.
   * User progress records and weekly learning stats.
-* **Connection String:** `mongodb://localhost:27017/cyberverse` (Local) / `mongodb://go-cyber-mongo:27017/cyberverse` (Docker Compose).
+* **Connection String:** `mongodb://localhost:27017/godevops` (Local) / `mongodb://go-devops-mongo:27017/godevops` (Docker Compose).
 * **Data Persistence:** Persistent Docker Volume (`go-cyber-mongo-data:/data/db`).
 
 ---
@@ -83,7 +83,7 @@ flowchart TB
 ## 4. Repository Folder Layout
 
 ```text
-go-cyber/
+go-devops/
 ├── .gitignore                        # Strict DevSecOps exclusion rules
 ├── architecture.md                   # Full system architecture and component topology
 ├── prd.md                            # Product Requirements Document
@@ -98,24 +98,18 @@ go-cyber/
 │   ├── middleware/                   # Auth, cookie, and validation middlewares
 │   ├── models/                       # Mongoose Schemas (User, Room, Lab, WeeklyStats)
 │   ├── routes/                       # REST routes (auth, rooms, admin, 2fa, etc.)
-│   ├── scripts/                      # DB initialization & seeding scripts
-│   ├── services/                     # Business logic (2FA TOTP service)
-│   ├── uploads/                      # User avatars (ephemeral)
-│   ├── package.json                  # Backend dependencies & scripts
-│   └── server.js                     # Application entrypoint & HTTP server
+│   ├── scripts/                      # Seed scripts (createDevOpsRooms.js)
+│   ├── services/                     # 2FA and email services
+│   └── server.js                     # Express bootstrap & MongoDB connection
 │
-└── frontend/                         # React + Vite Presentation Tier
-    ├── .env                          # Local environment config (Git-ignored)
-    ├── .env.example                  # Documentation template
-    ├── public/                       # Static public assets
-    ├── src/                          # Application source code
-    │   ├── api/                      # Axios HTTP client configuration
-    │   ├── components/               # Reusable UI & Radix components
-    │   ├── contexts/                 # React Contexts (App, Auth, Realtime)
-    │   ├── pages/                    # Route pages (Home, Rooms, Dashboard, Admin, etc.)
-    │   ├── services/                 # API client service wrappers
-    │   └── main.jsx                  # React DOM entrypoint
-    ├── index.html                    # Single Page Application HTML root
-    ├── package.json                  # Frontend dependencies
-    └── vite.config.js                # Vite bundler & HMR configuration
+└── frontend/                         # React 18 + Vite Frontend Tier
+    ├── src/
+    │   ├── api/                      # Axios HTTP client instance
+    │   ├── components/               # Navbar, Footer, ProtectedRoute, UI primitives
+    │   ├── contexts/                 # React Context (Auth & App state)
+    │   ├── pages/                    # Home, Rooms, RoomDetail, Dashboard, AdminPortal
+    │   └── services/                 # Frontend API integration services
+    ├── index.html                    # Single-Page Application entrypoint
+    ├── vite.config.js                # Vite build and proxy configuration
+    └── package.json                  # Frontend dependencies
 ```

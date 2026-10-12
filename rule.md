@@ -1,4 +1,4 @@
-# AI Engineering & DevOps Rulebook: Go-Cyber
+# AI Engineering & DevOps Rulebook: GoDevOps
 
 ---
 

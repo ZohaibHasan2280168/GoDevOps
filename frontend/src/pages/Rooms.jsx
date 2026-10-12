@@ -130,8 +130,8 @@ const Rooms = memo(() => {
         </div>
 
         <div className="flex flex-wrap gap-3 mb-6">
-          <div className="flex gap-2">
-            {["all", "Development", "Web", "Networking", "DevOps"].map(category => (
+          <div className="flex gap-2 flex-wrap">
+            {["all", "Linux", "Docker", "Kubernetes", "CI/CD", "Terraform", "DevOps"].map(category => (
               <button
                 key={category}
                 onClick={() => handleCategoryChange(category)}

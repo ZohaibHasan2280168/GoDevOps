@@ -48,35 +48,35 @@ const Home = memo(() => {
   const features = useMemo(() => [
     {
       icon: Terminal,
-      title: "Interactive Labs",
-      description: "Practice real-world cybersecurity scenarios in isolated virtual environments",
+      title: "Hands-on Linux & CLI",
+      description: "Master terminal commands, shell scripting, permissions, and system administration",
       color: "teal"
     },
     {
-      icon: Network,
-      title: "Live Attack Rooms",
-      description: "Join collaborative hacking challenges with players worldwide",
+      icon: Zap,
+      title: "Docker Containerization",
+      description: "Build, run, and optimize production-grade Docker containers and multi-stage builds",
       color: "coral"
     },
     {
-      icon: Trophy,
-      title: "Global Leaderboard",
-      description: "Compete with hackers globally and climb the ranks",
+      icon: Network,
+      title: "Kubernetes Orchestration",
+      description: "Deploy Pods, Services, Ingress, and auto-scaling workloads in real cluster scenarios",
       color: "sunflower"
     },
     {
       icon: Code,
-      title: "Skill Progression",
-      description: "Track your learning journey from beginner to expert",
+      title: "CI/CD & GitOps Automation",
+      description: "Automate build, test, and release pipelines with GitHub Actions and GitOps workflows",
       color: "glow"
     },
   ], [])
 
   const categories = useMemo(() => [
-    { name: "Web Security", icon: Lock, count: 0, color: "coral" },
-    { name: "Network Pentesting", icon: Network, count: 0, color: "teal" },
-    { name: "Cryptography", icon: Shield, count: 0, color: "glow" },
-    { name: "Forensics", icon: Zap, count: 0, color: "glass" },
+    { name: "Linux & Bash", icon: Terminal, count: 5, color: "coral" },
+    { name: "Docker Containers", icon: Zap, count: 4, color: "teal" },
+    { name: "Kubernetes & Cloud", icon: Network, count: 6, color: "glow" },
+    { name: "CI/CD & GitOps", icon: Code, count: 4, color: "glass" },
   ], [])
 
   // Memoized navigation handlers
@@ -99,17 +99,17 @@ const Home = memo(() => {
           <div className="mx-auto max-w-4xl text-center">
             <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-primary/10 border border-primary/20 px-4 py-2 text-sm">
               <Sparkles className="h-3 w-3 text-primary" />
-              <span className="text-primary">Next-gen security training</span>
+              <span className="text-primary">Next-Gen Cloud & DevOps Platform</span>
             </div>
             
             <h1 className="mb-4 text-3xl font-bold leading-tight md:text-5xl">
               Master{" "}
-              <span className="gradient-text">technical </span>
-              {" "}Skills
+              <span className="gradient-text">DevOps & Cloud</span>
+              {" "}Engineering
             </h1>
             
             <p className="mb-8 text-lg text-muted max-w-2xl mx-auto">
-              Learn through hands-on labs, compete in live challenges, and advance your career
+              Interactive challenge rooms, real-world container labs, and hands-on cloud scenarios built for modern engineers.
             </p>
             
             <div className="flex flex-col gap-3 sm:flex-row sm:justify-center mb-12">
@@ -145,8 +145,8 @@ const Home = memo(() => {
       <section id="features" className="py-12">
         <div className="container mx-auto px-6 max-w-6xl">
           <div className="mb-10 text-center">
-            <h2 className="mb-3 text-2xl font-bold text-text">Why Choose Go Cyber?</h2>
-            <p className="text-muted max-w-2xl mx-auto">Professional training with real-world scenarios</p>
+            <h2 className="mb-3 text-2xl font-bold text-text">Why Choose GoDevOps?</h2>
+            <p className="text-muted max-w-2xl mx-auto">Practical engineering with production-grade architectures</p>
           </div>
           
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">

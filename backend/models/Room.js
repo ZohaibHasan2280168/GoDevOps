@@ -30,13 +30,13 @@ const roomSchema = new mongoose.Schema({
   category: {
     type: String,
     required: [true, 'Category is required'],
-    enum: ['Development', 'Networking', 'Web', 'DevOps', 'Misc']
+    enum: ['Linux', 'Docker', 'Kubernetes', 'CI/CD', 'Terraform', 'Cloud', 'DevOps', 'Development', 'Networking', 'Web', 'Misc']
   },
   tags: [String],
   cover_image_url: String,
   creator: {
     type: String,
-    default: 'Go-Cyber Team'
+    default: 'GoDevOps Team'
   },
   estimated_time_minutes: {
     type: Number,
@@ -114,7 +114,6 @@ const roomSchema = new mongoose.Schema({
 // Index for better performance
 roomSchema.index({ category: 1, difficulty: 1 });
 roomSchema.index({ isActive: 1 });
-roomSchema.index({ slug: 1 });
 roomSchema.index({ tags: 1 });
 
 module.exports = mongoose.model('Room', roomSchema);

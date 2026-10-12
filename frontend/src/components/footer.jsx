@@ -16,14 +16,14 @@ export default function Footer() {
               </div>
               <div className="flex flex-col">
                 <span className="text-lg font-bold bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-400 bg-clip-text text-transparent">
-                  GO CYBER
+                  GODEVOPS
                 </span>
-                <span className="text-xs text-slate-400 -mt-1">Learning Platform</span>
+                <span className="text-xs text-slate-400 -mt-1">DevOps & Cloud Platform</span>
               </div>
             </Link>
             
             <p className="text-slate-400 text-sm max-w-xs">
-              Enhance your learning through hands-on practice with interactive labs and collaborative environments.
+              Master DevOps engineering through hands-on practice with interactive Linux, Docker, Kubernetes, and Cloud labs.
             </p>
             
             <div className="flex gap-3">
@@ -101,12 +101,12 @@ export default function Footer() {
         <div className="border-t border-blue-500/20 mt-8 pt-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-3">
             <p className="text-slate-400 text-sm">
-              © 2026 Go Cyber. All rights reserved.
+              © 2026 GoDevOps. All rights reserved.
             </p>
             
             <div className="text-sm">
               <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent font-medium">
-                Interactive Digital Learning Platform
+                Interactive Cloud & DevOps Platform
               </span>
             </div>
           </div>

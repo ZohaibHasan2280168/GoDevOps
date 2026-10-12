@@ -13,21 +13,21 @@ class EmailService {
 
   async sendOTP(email, otp, expiresAt) {
     const mailOptions = {
-      from: `"Go-Cyber Security" <${process.env.GMAIL_USER}>`,
+      from: `"GoDevOps Cloud" <${process.env.GMAIL_USER}>`,
       to: email,
-      subject: 'Your Go-Cyber 2FA Verification Code',
+      subject: 'Your GoDevOps 2FA Verification Code',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; text-align: center;">
-            <h1 style="color: white; margin: 0;">Go-Cyber</h1>
-            <p style="color: white; margin: 5px 0;">Security Verification</p>
+          <div style="background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%); padding: 20px; text-align: center;">
+            <h1 style="color: white; margin: 0;">GoDevOps</h1>
+            <p style="color: white; margin: 5px 0;">DevOps & Cloud Engineering Platform</p>
           </div>
           
           <div style="padding: 30px; background: #f8f9fa;">
             <h2 style="color: #333; margin-bottom: 20px;">Your Verification Code</h2>
             
             <div style="background: white; padding: 20px; border-radius: 8px; text-align: center; margin: 20px 0;">
-              <div style="font-size: 32px; font-weight: bold; color: #667eea; letter-spacing: 5px; margin: 10px 0;">
+              <div style="font-size: 32px; font-weight: bold; color: #2563eb; letter-spacing: 5px; margin: 10px 0;">
                 ${otp}
               </div>
               <p style="color: #666; margin: 10px 0;">Enter this code to complete your verification</p>
@@ -44,9 +44,9 @@ class EmailService {
             </p>
           </div>
           
-          <div style="background: #343a40; padding: 20px; text-align: center;">
-            <p style="color: #adb5bd; margin: 0; font-size: 12px;">
-              © 2026 Go-Cyber. This is an automated security message.
+          <div style="background: #1e293b; padding: 20px; text-align: center;">
+            <p style="color: #94a3b8; margin: 0; font-size: 12px;">
+              © 2026 GoDevOps. This is an automated security message.
             </p>
           </div>
         </div>

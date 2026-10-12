@@ -1,22 +1,21 @@
-# Project Milestones & DevOps Task Board: Go-Cyber
+# Project Milestones & DevOps Task Board: GoDevOps
 
 ---
 
-## Phase 1: Repository Sanitization & Local Verification [COMPLETED ✅]
-- [x] Clone repository into clean workspace `/home/harry/Devops/Projects/go-cyber`.
-- [x] Remove old `.git` directory and wipe prior author history and commits.
-- [x] Clean legacy build artifacts (`frontend/out`) and author documentation.
-- [x] Create comprehensive DevSecOps root `.gitignore` (ignoring `.env`, secrets, `.tfstate`).
-- [x] Install Node.js 20 LTS via NVM on host machine.
-- [x] Spin up isolated MongoDB 7.0 Docker container (`go-cyber-mongo`) with persistent volume.
-- [x] Configure backend `.env` and frontend `.env` for local communication.
-- [x] Fix double-hashing password bug in `server.js` and User schema.
-- [x] Eliminate hardcoded fallback credentials (`|| 'Admin@Secure2026!'`) from codebase.
-- [x] Seed initial CTF challenge rooms and verify MongoDB persistence.
-- [x] Test end-to-end authentication: User registration, Student login, and Admin login.
-- [x] Make clean baseline Git commit on `main` branch.
-- [x] Create project documentation: `architecture.md`, `prd.md`, `rule.md`, `memory.md`, `task.md`.
-- [x] Create Git-ignored `LOCAL_ACCESS_GUIDE.md` for local operational reference.
+## Phase 1: Repository Sanitization & DevOps Pivot [COMPLETED ✅]
+- [x] Cloned repository into clean workspace `/home/harry/Devops/Projects/go-devops`.
+- [x] Removed old `.git` directory and wiped prior author history and commits.
+- [x] Cleaned legacy build artifacts (`frontend/out`) and author personal documentation.
+- [x] Created comprehensive DevSecOps root `.gitignore` (ignoring `.env`, secrets, `.tfstate`).
+- [x] Installed Node.js 20 LTS via NVM on host machine.
+- [x] Spun up isolated MongoDB 7.0 Docker container (`go-devops-mongo`) with persistent volume.
+- [x] Configured backend `.env` and frontend `.env` for local communication.
+- [x] Fixed double-hashing password bug in `server.js` and User schema.
+- [x] Eliminated hardcoded fallback credentials (`|| 'Admin@Secure2026!'`) from codebase.
+- [x] **DevOps Pivot**: Authored `backend/scripts/createDevOpsRooms.js` and seeded 5 comprehensive DevOps challenge rooms (Linux, Docker, Kubernetes, CI/CD, Terraform).
+- [x] Tested end-to-end authentication: User registration, Student login, and Admin login.
+- [x] Created standard enterprise documentation: `architecture.md`, `prd.md`, `rule.md`, `memory.md`, `task.md`.
+- [x] Created Git-ignored `LOCAL_ACCESS_GUIDE.md` for local operational reference.
 
 ---
 
@@ -32,7 +31,7 @@
   - [ ] Configure security headers and gzip compression.
 - [ ] Create `docker-compose.yml`:
   - [ ] Define `frontend`, `backend`, and `mongodb` services.
-  - [ ] Configure isolated bridge network (`cyber-net`).
+  - [ ] Configure isolated bridge network (`devops-net`).
   - [ ] Configure named volume for MongoDB persistence.
   - [ ] Add health checks and dependency conditions (`depends_on: condition: service_healthy`).
 - [ ] Test local multi-container stack (`docker compose up --build`).

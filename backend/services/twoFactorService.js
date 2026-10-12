@@ -16,8 +16,8 @@ class TwoFactorService {
   // Generate TOTP secret for authenticator apps
   generateTOTPSecret(userEmail) {
     const secret = speakeasy.generateSecret({
-      name: `Go-Cyber (${userEmail})`,
-      issuer: 'Go-Cyber',
+      name: `GoDevOps (${userEmail})`,
+      issuer: 'GoDevOps',
       length: 32
     });
     return secret;
