@@ -37,16 +37,20 @@
   - [x] Configure named volume for MongoDB persistence (`godevops-mongo-data`).
   - [x] Add resource memory limits and CPU throttling (`deploy.resources.limits`).
   - [x] Add health checks and dependency conditions (`depends_on: condition: service_healthy`).
-- [ ] Test local multi-container stack (`docker compose up --build -d`).
+- [x] Test local multi-container stack (`docker compose up --build -d`).
 
 ---
 
-## Phase 3: CI/CD Pipeline with GitHub Actions [PLANNED ⏳]
-- [ ] Configure GitHub Actions workflow (`.github/workflows/ci.yml`).
-- [ ] Add automated linting and code quality checks.
-- [ ] Integrate **Gitleaks** secret scanning step.
-- [ ] Integrate **Trivy** vulnerability scanner for Docker images.
-- [ ] Build and publish Docker images to container registry (AWS ECR / Docker Hub).
+## Phase 3: CI Pipeline with GitHub Actions & SonarCloud [IN PROGRESS 🚀]
+- [x] Setup Jest testing framework and Supertest in backend (`jest.config.js`).
+- [x] Author automated unit and integration tests (`health.test.js`, `authValidation.test.js`, `roomModel.test.js`).
+- [x] Configure code coverage metrics (`lcov.info`).
+- [x] Author SonarCloud scanner configuration (`sonar-project.properties`).
+- [x] Author GitHub Actions CI workflow (`.github/workflows/ci.yml`):
+  - [x] Job 1: Automated testing & SonarCloud Quality Gate.
+  - [x] Job 2: Trivy DevSecOps filesystem vulnerability scan.
+  - [x] Job 3: Docker Buildx verification for frontend and backend images.
+- [ ] Test CI pipeline locally and push to GitHub to observe automated run.
 
 ---
 
