@@ -13,13 +13,13 @@ class EmailService {
 
   async sendOTP(email, otp, expiresAt) {
     const mailOptions = {
-      from: `"CyberVerse Security" <${process.env.GMAIL_USER}>`,
+      from: `"Go-Cyber Security" <${process.env.GMAIL_USER}>`,
       to: email,
-      subject: 'Your CyberVerse 2FA Verification Code',
+      subject: 'Your Go-Cyber 2FA Verification Code',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; text-align: center;">
-            <h1 style="color: white; margin: 0;">CyberVerse</h1>
+            <h1 style="color: white; margin: 0;">Go-Cyber</h1>
             <p style="color: white; margin: 5px 0;">Security Verification</p>
           </div>
           
@@ -46,7 +46,7 @@ class EmailService {
           
           <div style="background: #343a40; padding: 20px; text-align: center;">
             <p style="color: #adb5bd; margin: 0; font-size: 12px;">
-              © 2024 CyberVerse. This is an automated security message.
+              © 2026 Go-Cyber. This is an automated security message.
             </p>
           </div>
         </div>

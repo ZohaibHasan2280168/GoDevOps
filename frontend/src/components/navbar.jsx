@@ -40,7 +40,7 @@ const Navbar = () => {
       <div className="container mx-auto flex items-center justify-between h-16">
         {/* Logo */}
         <Link to="/" className="text-2xl font-bold gradient-text">
-          CyberVerse
+          Go Cyber
         </Link>
 
         {/* Desktop Navigation */}

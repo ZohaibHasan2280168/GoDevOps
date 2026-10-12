@@ -4,7 +4,7 @@
 
 ## 1. Product Overview
 
-**Go-Cyber (CyberVerse)** is a cloud-native, hands-on **Cybersecurity Training & CTF (Capture The Flag) Learning Platform** designed to train developers and security engineers in offensive security, defensive engineering, and DevSecOps best practices.
+**Go-Cyber** is a cloud-native, hands-on **Cybersecurity Training & CTF (Capture The Flag) Learning Platform** designed to train developers and security engineers in offensive security, defensive engineering, and DevSecOps best practices.
 
 The platform combines modular challenge rooms, interactive quizzes, gamified progression systems, and enterprise-grade security mechanisms (2FA TOTP).
 

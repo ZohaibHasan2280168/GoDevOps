@@ -16,7 +16,7 @@ export default function Footer() {
               </div>
               <div className="flex flex-col">
                 <span className="text-lg font-bold bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-400 bg-clip-text text-transparent">
-                  CYBERVERSE
+                  GO CYBER
                 </span>
                 <span className="text-xs text-slate-400 -mt-1">Learning Platform</span>
               </div>
@@ -101,7 +101,7 @@ export default function Footer() {
         <div className="border-t border-blue-500/20 mt-8 pt-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-3">
             <p className="text-slate-400 text-sm">
-              © 2024 CyberVerse. All rights reserved.
+              © 2026 Go Cyber. All rights reserved.
             </p>
             
             <div className="text-sm">

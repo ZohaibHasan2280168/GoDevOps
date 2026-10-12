@@ -36,7 +36,7 @@ const roomSchema = new mongoose.Schema({
   cover_image_url: String,
   creator: {
     type: String,
-    default: 'CyberVerse Team'
+    default: 'Go-Cyber Team'
   },
   estimated_time_minutes: {
     type: Number,

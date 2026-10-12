@@ -77,7 +77,7 @@ const RegisterPage = memo(() => {
             <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 mb-4">
               <Shield className="h-6 w-6 text-white" />
             </div>
-            <h1 className="text-xl font-bold text-white mb-1">Join CyberVerse</h1>
+            <h1 className="text-xl font-bold text-white mb-1">Join Go Cyber</h1>
             <p className="text-gray-300 text-sm">Only Gmail accounts allowed</p>
           </div>
 

@@ -1,7 +1,7 @@
 {
-  "name": "cyberverse-backend",
+  "name": "go-cyber-backend",
   "version": "1.0.0",
-  "description": "CyberVerse Learning Platform Backend API",
+  "description": "Go-Cyber Learning Platform Backend API",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -37,6 +37,6 @@
     "api",
     "authentication"
   ],
-  "author": "CyberVerse Team",
+  "author": "Go-Cyber Team",
   "license": "MIT"
 }

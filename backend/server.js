@@ -177,7 +177,7 @@ app.use('/api/2fa', require('./routes/twoFactor')); // 2FA enabled
 app.get('/api/health', (req, res) => {
   res.json({ 
     status: 'OK', 
-    message: 'CyberVerse API is running',
+    message: 'Go-Cyber API is running',
     timestamp: new Date().toISOString()
   });
 });

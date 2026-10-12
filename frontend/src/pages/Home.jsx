@@ -145,7 +145,7 @@ const Home = memo(() => {
       <section id="features" className="py-12">
         <div className="container mx-auto px-6 max-w-6xl">
           <div className="mb-10 text-center">
-            <h2 className="mb-3 text-2xl font-bold text-text">Why Choose CyberVerse?</h2>
+            <h2 className="mb-3 text-2xl font-bold text-text">Why Choose Go Cyber?</h2>
             <p className="text-muted max-w-2xl mx-auto">Professional training with real-world scenarios</p>
           </div>
           

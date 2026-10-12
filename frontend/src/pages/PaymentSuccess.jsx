@@ -39,7 +39,7 @@ const PaymentSuccessPage = memo(() => {
             Payment Successful! 🎉
           </h1>
           <p className="text-xl text-slate-300">
-            Welcome to CyberVerse Premium
+            Welcome to Go Cyber Premium
           </p>
         </div>
 

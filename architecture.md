@@ -1,4 +1,4 @@
-# System Architecture: Go-Cyber (CyberVerse)
+# System Architecture: Go-Cyber
 
 ---
 

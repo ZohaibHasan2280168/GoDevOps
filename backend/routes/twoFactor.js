@@ -29,8 +29,8 @@ router.post('/setup', auth, async (req, res) => {
     
     // Generate TOTP secret with proper configuration
     const secret = speakeasy.generateSecret({
-      name: `CyberVerse (${user.email})`,
-      issuer: 'CyberVerse',
+      name: `Go-Cyber (${user.email})`,
+      issuer: 'Go-Cyber',
       length: 20 // Standard length for better compatibility
     });
     

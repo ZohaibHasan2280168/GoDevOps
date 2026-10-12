@@ -73,7 +73,7 @@ const EmailVerification = () => {
       <div className="max-w-md w-full bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-white mb-2">Email Verification</h1>
-          <p className="text-gray-300">Verify your CyberVerse account</p>
+          <p className="text-gray-300">Verify your Go Cyber account</p>
         </div>
 
         {status === 'verifying' && (

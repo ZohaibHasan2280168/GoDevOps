@@ -4,7 +4,7 @@
 
 ## 1. Project Snapshot
 
-* **Project Name:** Go-Cyber (Platform: CyberVerse)
+* **Project Name:** Go-Cyber
 * **Workspace Path:** `/home/harry/Devops/Projects/go-cyber`
 * **Current Phase:** Phase 1 (Completed) ➔ Transitioning to Phase 2 (Dockerization)
 * **Active Environment:** Hybrid Local Setup (Node 20 LTS on host + MongoDB 7.0 in Docker container)
