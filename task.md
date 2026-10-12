@@ -54,22 +54,23 @@
 
 ---
 
-## Phase 4: Infrastructure as Code with Terraform (AWS) [PLANNED ⏳]
-- [ ] Setup Terraform structure (`vpc/`, `eks/`, `security/`, `iam/`).
-- [ ] Provision AWS VPC with public and private subnets across multiple AZs.
-- [ ] Provision Internet Gateway, NAT Gateway, and Route Tables.
-- [ ] Provision Amazon EKS Cluster with managed node groups.
-- [ ] Provision AWS ECR repository for container images.
-- [ ] Configure S3 backend and DynamoDB table for Terraform state locking.
+## Phase 4: Infrastructure as Code with Terraform (AWS) [READY 🚀]
+- [x] Author AWS Provider and Backend config (`terraform/main.tf`).
+- [x] Author Dynamic Input Variables (`terraform/variables.tf`).
+- [x] Author Multi-AZ 3-Tier VPC with Public/Private Subnets & NAT Gateway (`terraform/vpc.tf`).
+- [x] Author AWS EKS Cluster and Managed Worker Node Groups (`terraform/eks.tf`).
+- [x] Author AWS ECR Container Registries with scan-on-push (`terraform/ecr.tf`).
+- [x] Author Outputs exporting VPC, EKS, and ECR endpoints (`terraform/outputs.tf`).
 
 ---
 
-## Phase 5: Kubernetes Manifests & Cluster Deployment [PLANNED ⏳]
-- [ ] Author Kubernetes Deployments for Frontend and Backend.
-- [ ] Author Kubernetes Services (`ClusterIP` for internal, `LoadBalancer`/Ingress for external).
-- [ ] Author ConfigMaps and Secrets for environment injection.
-- [ ] Setup Horizontal Pod Autoscaler (HPA) based on CPU/Memory metrics.
-- [ ] Setup Ingress Controller (AWS ALB / Nginx Ingress).
+## Phase 5: Kubernetes Manifests & GitOps with ArgoCD [READY 🚀]
+- [x] Author isolated Kubernetes Namespace (`k8s/namespace.yaml`).
+- [x] Author ConfigMap and Secrets for 12-factor configuration (`k8s/configmap.yaml`, `k8s/secrets.yaml`).
+- [x] Author MongoDB PersistentVolumeClaim, Deployment, and Service (`k8s/mongodb.yaml`).
+- [x] Author Backend Deployment with RollingUpdate, non-root user, and health probes (`k8s/backend.yaml`).
+- [x] Author Frontend Deployment and LoadBalancer Service (`k8s/frontend.yaml`).
+- [x] Author ArgoCD Application CRD for GitOps Continuous Delivery & Self-Healing (`k8s/argocd-application.yaml`).
 
 ---
 

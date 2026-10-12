@@ -29,6 +29,8 @@ build/
 out/
 .next/
 .cache/
+coverage/
+*.lcov
 
 # 4. Uploads & Ephemeral User Data
 backend/uploads/*

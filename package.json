@@ -1,5 +1,9 @@
 {
+  "name": "godevops",
+  "version": "1.0.0",
+  "private": true,
   "scripts": {
-    "build": "react-scripts build"
+    "test": "npm --prefix backend test",
+    "test:backend": "npm --prefix backend test"
   }
 }
