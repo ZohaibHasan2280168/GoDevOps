@@ -1,0 +1,103 @@
+services:
+  # ============================================================================
+  # 1. State / Database Tier: MongoDB 7.0
+  # ============================================================================
+  mongodb:
+    image: mongo:7.0
+    container_name: godevops-mongo
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_DATABASE: godevops
+    ports:
+      - "27017:27017"
+    volumes:
+      - godevops-mongo-data:/data/db
+    networks:
+      - godevops-net
+    healthcheck:
+      test: ["CMD-SHELL", "mongosh --eval 'db.adminCommand(\"ping\")' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 512M
+        reservations:
+          memory: 256M
+
+  # ============================================================================
+  # 2. Application Logic Tier: Express.js Backend (Node.js 20 Non-Root)
+  # ============================================================================
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: godevops-backend
+    restart: unless-stopped
+    environment:
+      PORT: 5000
+      NODE_ENV: production
+      MONGODB_URI: mongodb://mongodb:27017/godevops
+      JWT_SECRET: dev_jwt_secret_godevops_2026_super_key_secure
+      JWT_EXPIRE: 7d
+      DEFAULT_ADMIN_NAME: GoDevOps Admin
+      DEFAULT_ADMIN_EMAIL: admin@godevops.com
+      DEFAULT_ADMIN_PASSWORD: Admin@DevOps2026!
+    ports:
+      - "5000:5000"
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - godevops-net
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 512M
+        reservations:
+          memory: 128M
+
+  # ============================================================================
+  # 3. Web Presentation Tier: React + Vite (Nginx Multi-Stage Runtime)
+  # ============================================================================
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: /api
+    container_name: godevops-frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - godevops-net
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 128M
+        reservations:
+          memory: 64M
+
+# ==============================================================================
+# Isolated Bridge Network
+# ==============================================================================
+networks:
+  godevops-net:
+    driver: bridge
+    name: godevops-net
+
+# ==============================================================================
+# Persistent Named Volumes
+# ==============================================================================
+volumes:
+  godevops-mongo-data:
+    name: godevops-mongo-data

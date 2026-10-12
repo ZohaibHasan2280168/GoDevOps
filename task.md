@@ -19,22 +19,25 @@
 
 ---
 
-## Phase 2: Docker Containerization & Docker Compose [UP NEXT 🚀]
-- [ ] Create Backend `Dockerfile`:
-  - [ ] Use minimal `node:20-alpine` base image.
-  - [ ] Implement non-root execution (`USER node`).
-  - [ ] Optimize Docker layer caching (`package*.json` copy first).
-  - [ ] Add container health check (`HEALTHCHECK`).
-- [ ] Create Frontend `Dockerfile`:
-  - [ ] Multi-stage build (Stage 1: Node builder, Stage 2: Nginx runtime).
-  - [ ] Add custom `nginx.conf` for Single Page Application routing (`try_files $uri /index.html`).
-  - [ ] Configure security headers and gzip compression.
-- [ ] Create `docker-compose.yml`:
-  - [ ] Define `frontend`, `backend`, and `mongodb` services.
-  - [ ] Configure isolated bridge network (`devops-net`).
-  - [ ] Configure named volume for MongoDB persistence.
-  - [ ] Add health checks and dependency conditions (`depends_on: condition: service_healthy`).
-- [ ] Test local multi-container stack (`docker compose up --build`).
+## Phase 2: Docker Containerization & Docker Compose [IN PROGRESS 🚀]
+- [x] Create `.dockerignore` files for both backend and frontend.
+- [x] Create Backend `Dockerfile`:
+  - [x] Use minimal `node:20-alpine` base image.
+  - [x] Implement non-root execution (`USER node`).
+  - [x] Optimize Docker layer caching (`package*.json` copy first).
+  - [x] Add container health check (`HEALTHCHECK`).
+- [x] Create Frontend `Dockerfile`:
+  - [x] Multi-stage build (Stage 1: Node builder, Stage 2: Nginx runtime).
+  - [x] Add custom `nginx.conf` for Single Page Application routing (`try_files $uri /index.html`).
+  - [x] Configure reverse proxy for `/api/` to eliminate CORS issues.
+  - [x] Configure security headers and gzip compression.
+- [x] Create `docker-compose.yml`:
+  - [x] Define `frontend`, `backend`, and `mongodb` services.
+  - [x] Configure isolated bridge network (`godevops-net`).
+  - [x] Configure named volume for MongoDB persistence (`godevops-mongo-data`).
+  - [x] Add resource memory limits and CPU throttling (`deploy.resources.limits`).
+  - [x] Add health checks and dependency conditions (`depends_on: condition: service_healthy`).
+- [ ] Test local multi-container stack (`docker compose up --build -d`).
 
 ---
 
