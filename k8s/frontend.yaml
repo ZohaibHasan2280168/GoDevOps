@@ -58,10 +58,11 @@ metadata:
   labels:
     app: frontend
 spec:
-  type: LoadBalancer # Exposes public endpoint in cloud / Minikube tunnel
+  type: NodePort # NodePort for local Minikube (fixes ArgoCD <pending> LoadBalancer Progressing status)
   ports:
     - port: 80
       targetPort: 80
+      nodePort: 31886
       name: http
   selector:
     app: frontend
