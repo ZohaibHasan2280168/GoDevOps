@@ -13,6 +13,8 @@
 *.pfx
 secrets/
 credentials.json
+LOCAL_ACCESS_GUIDE.md
+local_*.md
 
 # 2. Dependencies
 node_modules/
