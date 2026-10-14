@@ -12,14 +12,14 @@ terraform {
     }
   }
 
-  # Production S3 Backend with DynamoDB State Locking (Configurable)
-  # backend "s3" {
-  #   bucket         = "godevops-terraform-state-bucket"
-  #   key            = "prod/terraform.tfstate"
-  #   region         = "us-east-1"
-  #   dynamodb_table = "godevops-terraform-locks"
-  #   encrypt        = true
-  # }
+  # Production S3 Backend with DynamoDB State Locking
+  backend "s3" {
+    bucket         = "godevops-tf-state-479537131188"
+    key            = "prod/terraform.tfstate"
+    region         = "us-east-1"
+    dynamodb_table = "godevops-terraform-locks"
+    encrypt        = true
+  }
 }
 
 provider "aws" {

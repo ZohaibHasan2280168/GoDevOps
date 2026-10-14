@@ -19,7 +19,7 @@
 
 ---
 
-## Phase 2: Docker Containerization & Docker Compose [IN PROGRESS 🚀]
+## Phase 2: Docker Containerization & Docker Compose [COMPLETED ✅]
 - [x] Create `.dockerignore` files for both backend and frontend.
 - [x] Create Backend `Dockerfile`:
   - [x] Use minimal `node:20-alpine` base image.
@@ -41,7 +41,7 @@
 
 ---
 
-## Phase 3: CI Pipeline with GitHub Actions & SonarCloud [IN PROGRESS 🚀]
+## Phase 3: CI Pipeline with GitHub Actions & SonarCloud [COMPLETED ✅]
 - [x] Setup Jest testing framework and Supertest in backend (`jest.config.js`).
 - [x] Author automated unit and integration tests (`health.test.js`, `authValidation.test.js`, `roomModel.test.js`).
 - [x] Configure code coverage metrics (`lcov.info`).
@@ -50,11 +50,11 @@
   - [x] Job 1: Automated testing & SonarCloud Quality Gate.
   - [x] Job 2: Trivy DevSecOps filesystem vulnerability scan.
   - [x] Job 3: Docker Buildx verification for frontend and backend images.
-- [ ] Test CI pipeline locally and push to GitHub to observe automated run.
+- [x] Tested CI pipeline workflows and pushed to GitHub.
 
 ---
 
-## Phase 4: Infrastructure as Code with Terraform (AWS) [READY 🚀]
+## Phase 4: Infrastructure as Code with Terraform (AWS) [COMPLETED ✅]
 - [x] Author AWS Provider and Backend config (`terraform/main.tf`).
 - [x] Author Dynamic Input Variables (`terraform/variables.tf`).
 - [x] Author Multi-AZ 3-Tier VPC with Public/Private Subnets & NAT Gateway (`terraform/vpc.tf`).
@@ -64,13 +64,16 @@
 
 ---
 
-## Phase 5: Kubernetes Manifests & GitOps with ArgoCD [READY 🚀]
+## Phase 5: Kubernetes Manifests & GitOps with ArgoCD [ACTIVE 🚀]
 - [x] Author isolated Kubernetes Namespace (`k8s/namespace.yaml`).
 - [x] Author ConfigMap and Secrets for 12-factor configuration (`k8s/configmap.yaml`, `k8s/secrets.yaml`).
 - [x] Author MongoDB PersistentVolumeClaim, Deployment, and Service (`k8s/mongodb.yaml`).
 - [x] Author Backend Deployment with RollingUpdate, non-root user, and health probes (`k8s/backend.yaml`).
-- [x] Author Frontend Deployment and LoadBalancer Service (`k8s/frontend.yaml`).
+- [x] Author Frontend Deployment and NodePort Service (`k8s/frontend.yaml`).
 - [x] Author ArgoCD Application CRD for GitOps Continuous Delivery & Self-Healing (`k8s/argocd-application.yaml`).
+- [x] Deploy to Minikube cluster and verify ArgoCD live sync & green Healthy status.
+- [x] End-to-end authentication verified on Kubernetes cluster.
+- [ ] Run Live GitOps Demos: Auto-reconciliation / Self-healing & Git-driven scaling.
 
 ---
 

@@ -7,12 +7,9 @@ metadata:
     app: frontend
     tier: web
 spec:
-  replicas: 4  # Scaled via GitOps from 2 to 4 (Demonstrating Git as Single Source of Truth)
+  replicas: 1  # 1 replica fits perfectly on t3.micro node
   strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 0
+    type: Recreate
   selector:
     matchLabels:
       app: frontend
@@ -24,8 +21,8 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: go-devops-frontend:latest
-          imagePullPolicy: IfNotPresent
+          image: 479537131188.dkr.ecr.us-east-1.amazonaws.com/godevops-frontend:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
           resources:
@@ -33,20 +30,28 @@ spec:
               cpu: "250m"
               memory: "128Mi"
             requests:
-              cpu: "100m"
+              cpu: "50m"
               memory: "64Mi"
+          startupProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 3
+            periodSeconds: 3
+            timeoutSeconds: 2
+            failureThreshold: 10 # 30 seconds startup window
           readinessProbe:
             httpGet:
               path: /
               port: 80
-            initialDelaySeconds: 5
+            initialDelaySeconds: 3
             periodSeconds: 10
             timeoutSeconds: 3
           livenessProbe:
             httpGet:
               path: /
               port: 80
-            initialDelaySeconds: 10
+            initialDelaySeconds: 5
             periodSeconds: 15
             timeoutSeconds: 3
 ---
@@ -58,11 +63,10 @@ metadata:
   labels:
     app: frontend
 spec:
-  type: NodePort # NodePort for local Minikube (fixes ArgoCD <pending> LoadBalancer Progressing status)
+  type: LoadBalancer # AWS Elastic Load Balancer (ALB/CLB) for Internet ingress
   ports:
     - port: 80
       targetPort: 80
-      nodePort: 31886
       name: http
   selector:
     app: frontend

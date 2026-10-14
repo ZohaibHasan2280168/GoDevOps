@@ -45,13 +45,13 @@ variable "cluster_name" {
 }
 
 variable "node_instance_types" {
-  description = "EC2 instance types for EKS worker nodes"
+  description = "EC2 instance types for EKS worker nodes (Free Tier eligible)"
   type        = list(string)
-  default     = ["t3.medium"]
+  default     = ["t3.micro"]
 }
 
 variable "desired_nodes" {
-  description = "Initial desired worker nodes count"
+  description = "Initial desired worker nodes count (2 x t3.micro for free tier capacity)"
   type        = number
   default     = 2
 }
@@ -65,5 +65,5 @@ variable "min_nodes" {
 variable "max_nodes" {
   description = "Maximum worker nodes count for autoscaling"
   type        = number
-  default     = 4
+  default     = 2
 }

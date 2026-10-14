@@ -7,12 +7,9 @@ metadata:
     app: backend
     tier: api
 spec:
-  replicas: 2
+  replicas: 1
   strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxSurge: 1        # Creates 1 new pod before killing an old one
-      maxUnavailable: 0  # Guarantees zero downtime!
+    type: Recreate
   selector:
     matchLabels:
       app: backend
@@ -27,8 +24,8 @@ spec:
         runAsUser: 1000
       containers:
         - name: backend
-          image: go-devops-backend:latest
-          imagePullPolicy: IfNotPresent
+          image: 479537131188.dkr.ecr.us-east-1.amazonaws.com/godevops-backend:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 5000
           envFrom:
@@ -41,13 +38,21 @@ spec:
               cpu: "500m"
               memory: "512Mi"
             requests:
-              cpu: "200m"
+              cpu: "100m"
               memory: "128Mi"
+          startupProbe:
+            httpGet:
+              path: /api/health
+              port: 5000
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 12  # Allows up to 60 seconds (5s * 12) for slow cold boots before failing
           readinessProbe:
             httpGet:
               path: /api/health
               port: 5000
-            initialDelaySeconds: 10
+            initialDelaySeconds: 5
             periodSeconds: 10
             timeoutSeconds: 3
             failureThreshold: 3
@@ -55,7 +60,7 @@ spec:
             httpGet:
               path: /api/health
               port: 5000
-            initialDelaySeconds: 15
+            initialDelaySeconds: 10
             periodSeconds: 15
             timeoutSeconds: 3
             failureThreshold: 3
