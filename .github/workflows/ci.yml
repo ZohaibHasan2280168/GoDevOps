@@ -96,3 +96,86 @@ jobs:
           file: ./frontend/Dockerfile
           push: false
           tags: godevops-frontend:ci-test
+
+  # ============================================================================
+  # 4. Amazon ECR Delivery & GitOps Manifest Bumping (ArgoCD Sync)
+  # ============================================================================
+  ecr-push-and-gitops:
+    name: Amazon ECR Push & GitOps Tag Bump
+    needs: [docker-build-verify]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Verify AWS Credentials
+        id: creds
+        run: |
+          if [ -n "${{ secrets.AWS_ACCESS_KEY_ID }}" ] && [ -n "${{ secrets.AWS_SECRET_ACCESS_KEY }}" ]; then
+            echo "has_aws=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_aws=false" >> $GITHUB_OUTPUT
+            echo "ℹ️ AWS_ACCESS_KEY_ID not configured in GitHub Secrets. ECR push step will be skipped."
+          fi
+
+      - name: Configure AWS Credentials
+        if: steps.creds.outputs.has_aws == 'true'
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Login to Amazon ECR
+        if: steps.creds.outputs.has_aws == 'true'
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Set up Docker Buildx
+        if: steps.creds.outputs.has_aws == 'true'
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build & Push Images to ECR
+        if: steps.creds.outputs.has_aws == 'true'
+        env:
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          TAG: sha-${{ github.sha }}
+        run: |
+          # 1. Build and Push Backend
+          docker build -t $REGISTRY/godevops-backend:$TAG -t $REGISTRY/godevops-backend:latest ./backend
+          docker push $REGISTRY/godevops-backend:$TAG
+          docker push $REGISTRY/godevops-backend:latest
+
+          # 2. Build and Push Frontend
+          docker build -t $REGISTRY/godevops-frontend:$TAG -t $REGISTRY/godevops-frontend:latest ./frontend
+          docker push $REGISTRY/godevops-frontend:$TAG
+          docker push $REGISTRY/godevops-frontend:latest
+
+          echo "TAG=$TAG" >> $GITHUB_ENV
+
+      - name: Update GitOps Kubernetes Manifests
+        if: steps.creds.outputs.has_aws == 'true'
+        run: |
+          # Update backend and frontend image tags in manifests
+          sed -i "s|image: .*/godevops-backend:.*|image: 479537131188.dkr.ecr.us-east-1.amazonaws.com/godevops-backend:$TAG|g" k8s/backend.yaml
+          sed -i "s|image: .*/godevops-frontend:.*|image: 479537131188.dkr.ecr.us-east-1.amazonaws.com/godevops-frontend:$TAG|g" k8s/frontend.yaml
+
+          # Commit & Push manifest change with [skip ci] to prevent loop
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add k8s/backend.yaml k8s/frontend.yaml
+          
+          if ! git diff-index --quiet HEAD; then
+            git commit -m "chore(gitops): update images to $TAG [skip ci]"
+            git push origin main
+            echo "🚀 GitOps manifests updated to $TAG! ArgoCD will now reconcile."
+          else
+            echo "No manifest changes detected."
+          fi
+

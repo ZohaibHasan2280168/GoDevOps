@@ -15,8 +15,12 @@ const roomRoutes = require('./routes/rooms');
 const User = require('./models/User');
 const Room = require('./models/Room');
 const Lab = require('./models/Lab');
+const { metricsMiddleware, metricsEndpoint } = require('./middleware/metrics');
 
 const app = express();
+
+// Intercept metrics before routes
+app.use(metricsMiddleware);
 
 // Security middleware
 app.use(helmet({
@@ -172,6 +176,9 @@ app.use('/api/rooms', roomRoutes);
 app.use('/api/progress', require('./routes/progress'));
 app.use('/api/room-progress', require('./routes/roomProgress'));
 app.use('/api/2fa', require('./routes/twoFactor')); // 2FA enabled
+
+// Prometheus Scrape Endpoint
+app.get('/metrics', metricsEndpoint);
 
 // Health check
 app.get('/api/health', (req, res) => {

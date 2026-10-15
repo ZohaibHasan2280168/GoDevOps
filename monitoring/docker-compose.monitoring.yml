@@ -1,0 +1,50 @@
+services:
+  prometheus:
+    image: prom/prometheus:v2.51.0
+    container_name: godevops-prometheus
+    restart: always
+    network_mode: "host"
+    volumes:
+      - ./prometheus:/etc/prometheus:ro
+      - prometheus_data:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--web.listen-address=0.0.0.0:9090"
+      - "--web.enable-lifecycle"
+
+  grafana:
+    image: grafana/grafana:10.4.1
+    container_name: godevops-grafana
+    restart: always
+    network_mode: "host"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_SERVER_HTTP_PORT=3001
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources:ro
+      - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards:ro
+
+  node-exporter:
+    image: prom/node-exporter:v1.7.0
+    container_name: godevops-node-exporter
+    restart: always
+    network_mode: "host"
+    pid: host
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - "--path.procfs=/host/proc"
+      - "--path.sysfs=/host/sys"
+      - "--path.rootfs=/rootfs"
+      - "--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)"
+      - "--web.listen-address=0.0.0.0:9100"
+
+volumes:
+  prometheus_data:
+  grafana_data:
