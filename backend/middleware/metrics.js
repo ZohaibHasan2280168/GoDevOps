@@ -33,6 +33,10 @@ const activeRequestsGauge = new client.Gauge({
 });
 register.registerMetric(activeRequestsGauge);
 
+// Baseline initialization so graphs never show 'No data' on startup
+httpRequestsTotal.labels('GET', '/api/health', '200').inc(0);
+httpRequestDurationSeconds.labels('GET', '/api/health', '200').observe(0.005);
+
 // Express Middleware to intercept and record traffic
 const metricsMiddleware = (req, res, next) => {
   // Exclude /metrics from being counted to prevent metric pollution

@@ -19,9 +19,18 @@ data:
             labels:
               app: 'godevops'
               tier: 'backend-api'
+
       - job_name: 'prometheus'
         static_configs:
           - targets: ['localhost:9090']
+
+      - job_name: 'kube-state-metrics'
+        static_configs:
+          - targets: ['kube-state-metrics.kube-system.svc.cluster.local:8080']
+
+      - job_name: 'argocd-metrics'
+        static_configs:
+          - targets: ['argocd-metrics.argocd.svc.cluster.local:8082']
 ---
 apiVersion: apps/v1
 kind: Deployment

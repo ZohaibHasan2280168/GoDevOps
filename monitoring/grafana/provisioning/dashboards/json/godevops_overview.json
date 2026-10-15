@@ -13,7 +13,7 @@
       "collapsed": false,
       "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 },
       "id": 100,
-      "title": "🚀 Platform Overview & Vital Signs",
+      "title": "🚀 [RED Method] Application Vital Signs & In-Flight State",
       "type": "row"
     },
     {
@@ -49,7 +49,7 @@
           "refId": "A"
         }
       ],
-      "title": "Total Requests Served",
+      "title": "[R - Rate] Total Requests Served",
       "type": "stat"
     },
     {
@@ -81,7 +81,7 @@
           "refId": "A"
         }
       ],
-      "title": "Active In-Flight Requests",
+      "title": "[R - Rate] Active In-Flight Requests",
       "type": "stat"
     },
     {
@@ -113,7 +113,7 @@
           "refId": "A"
         }
       ],
-      "title": "P95 Response Latency",
+      "title": "[D - Duration] P95 Response Latency",
       "type": "stat"
     },
     {
@@ -145,14 +145,14 @@
           "refId": "A"
         }
       ],
-      "title": "Backend Memory Heap",
+      "title": "[USE - U] Node.js Heap Memory",
       "type": "stat"
     },
     {
       "collapsed": false,
       "gridPos": { "h": 1, "w": 24, "x": 0, "y": 5 },
       "id": 101,
-      "title": "📈 Traffic Throughput & Error Rate",
+      "title": "📈 [RED Method] Traffic Throughput, Error Rate & Latency",
       "type": "row"
     },
     {
@@ -171,12 +171,12 @@
       "id": 5,
       "targets": [
         {
-          "expr": "sum(rate(godevops_http_requests_total[1m])) by (status_code)",
+          "expr": "sum(rate(godevops_http_requests_total[1m])) by (status_code) or vector(0)",
           "legendFormat": "HTTP {{status_code}}",
           "refId": "A"
         }
       ],
-      "title": "Request Throughput (RPS by Status Code)",
+      "title": "[R - Rate & E - Errors] Request Throughput (RPS by Status Code)",
       "type": "timeseries"
     },
     {
@@ -195,28 +195,424 @@
       "id": 6,
       "targets": [
         {
-          "expr": "histogram_quantile(0.50, sum(rate(godevops_http_request_duration_seconds_bucket[1m])) by (le))",
+          "expr": "histogram_quantile(0.50, sum(rate(godevops_http_request_duration_seconds_bucket[1m])) by (le)) or vector(0)",
           "legendFormat": "P50 Latency (Median)",
           "refId": "A"
         },
         {
-          "expr": "histogram_quantile(0.95, sum(rate(godevops_http_request_duration_seconds_bucket[1m])) by (le))",
+          "expr": "histogram_quantile(0.95, sum(rate(godevops_http_request_duration_seconds_bucket[1m])) by (le)) or vector(0)",
           "legendFormat": "P95 Latency",
           "refId": "B"
         },
         {
-          "expr": "histogram_quantile(0.99, sum(rate(godevops_http_request_duration_seconds_bucket[1m])) by (le))",
+          "expr": "histogram_quantile(0.99, sum(rate(godevops_http_request_duration_seconds_bucket[1m])) by (le)) or vector(0)",
           "legendFormat": "P99 Latency (Tail)",
           "refId": "C"
         }
       ],
-      "title": "Latency Distribution (P50, P95, P99)",
+      "title": "[D - Duration] Latency Percentiles (P50, P95, P99)",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 14 },
+      "id": 102,
+      "title": "🖥️ [USE Method] Host Hardware & Infrastructure Health",
+      "type": "row"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "Prometheus" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "mappings": [],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 70 },
+              { "color": "red", "value": 85 }
+            ]
+          },
+          "unit": "percent"
+        }
+      },
+      "gridPos": { "h": 6, "w": 8, "x": 0, "y": 15 },
+      "id": 7,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      },
+      "targets": [
+        {
+          "expr": "100 - (avg(rate(node_cpu_seconds_total{job=\"node-exporter\",mode=\"idle\"}[1m])) * 100)",
+          "refId": "A"
+        }
+      ],
+      "title": "[U - Utilization] Host CPU Usage",
+      "type": "gauge"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "Prometheus" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "mappings": [],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 75 },
+              { "color": "red", "value": 90 }
+            ]
+          },
+          "unit": "percent"
+        }
+      },
+      "gridPos": { "h": 6, "w": 8, "x": 8, "y": 15 },
+      "id": 8,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      },
+      "targets": [
+        {
+          "expr": "(1 - (node_memory_MemAvailable_bytes{job=\"node-exporter\"} / node_memory_MemTotal_bytes{job=\"node-exporter\"})) * 100",
+          "refId": "A"
+        }
+      ],
+      "title": "[U - Utilization] Host RAM Usage",
+      "type": "gauge"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "Prometheus" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "mappings": [],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 75 },
+              { "color": "red", "value": 90 }
+            ]
+          },
+          "unit": "percent"
+        }
+      },
+      "gridPos": { "h": 6, "w": 8, "x": 16, "y": 15 },
+      "id": 9,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      },
+      "targets": [
+        {
+          "expr": "100 - ((node_filesystem_avail_bytes{job=\"node-exporter\",mountpoint=\"/\"} * 100) / node_filesystem_size_bytes{job=\"node-exporter\",mountpoint=\"/\"})",
+          "refId": "A"
+        }
+      ],
+      "title": "[U - Utilization] Root Disk Space Used",
+      "type": "gauge"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "Prometheus" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "mappings": [],
+          "max": 8,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 3.5 },
+              { "color": "red", "value": 4.5 }
+            ]
+          },
+          "unit": "short"
+        }
+      },
+      "gridPos": { "h": 6, "w": 12, "x": 0, "y": 21 },
+      "id": 10,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      },
+      "targets": [
+        {
+          "expr": "node_load1{job=\"node-exporter\"}",
+          "legendFormat": "1-Min Load Avg",
+          "refId": "A"
+        },
+        {
+          "expr": "node_load5{job=\"node-exporter\"}",
+          "legendFormat": "5-Min Load Avg",
+          "refId": "B"
+        },
+        {
+          "expr": "node_load15{job=\"node-exporter\"}",
+          "legendFormat": "15-Min Load Avg",
+          "refId": "C"
+        }
+      ],
+      "title": "[S - Saturation] System CPU Load Average (Queue Saturation)",
+      "type": "gauge"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "Prometheus" },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "smooth",
+            "fillOpacity": 15
+          },
+          "unit": "pps"
+        }
+      },
+      "gridPos": { "h": 7, "w": 12, "x": 12, "y": 21 },
+      "id": 11,
+      "targets": [
+        {
+          "expr": "sum(rate(node_network_receive_errs_total{job=\"node-exporter\"}[1m])) + sum(rate(node_network_transmit_errs_total{job=\"node-exporter\"}[1m])) or vector(0)",
+          "legendFormat": "Network Packet Errors/sec",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(rate(node_network_receive_drop_total{job=\"node-exporter\"}[1m])) + sum(rate(node_network_transmit_drop_total{job=\"node-exporter\"}[1m])) or vector(0)",
+          "legendFormat": "Network Packet Drops/sec",
+          "refId": "B"
+        }
+      ],
+      "title": "[E - Errors] Network Packet Errors & Drops",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 28 },
+      "id": 103,
+      "title": "☸️ [USE Method] Kubernetes Pods & Containers (EKS / Cluster Health)",
+      "type": "row"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "Prometheus" },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "smooth",
+            "fillOpacity": 15
+          },
+          "unit": "short"
+        }
+      },
+      "gridPos": { "h": 7, "w": 12, "x": 0, "y": 29 },
+      "id": 12,
+      "targets": [
+        {
+          "expr": "sum(rate(container_cpu_usage_seconds_total{container!=\"\",container!=\"POD\"}[1m])) by (pod) or vector(0)",
+          "legendFormat": "Pod {{pod}} CPU",
+          "refId": "A"
+        }
+      ],
+      "title": "[U - Utilization] Pod CPU Usage (cAdvisor / Kubelet)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "Prometheus" },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "smooth",
+            "fillOpacity": 15
+          },
+          "unit": "bytes"
+        }
+      },
+      "gridPos": { "h": 7, "w": 12, "x": 12, "y": 29 },
+      "id": 13,
+      "targets": [
+        {
+          "expr": "sum(container_memory_working_set_bytes{container!=\"\",container!=\"POD\"}) by (pod) or vector(0)",
+          "legendFormat": "Pod {{pod}} Memory",
+          "refId": "A"
+        }
+      ],
+      "title": "[U - Utilization] Pod Memory Working Set (RAM)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "Prometheus" },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "smooth",
+            "fillOpacity": 15
+          },
+          "unit": "short"
+        }
+      },
+      "gridPos": { "h": 6, "w": 12, "x": 0, "y": 36 },
+      "id": 14,
+      "targets": [
+        {
+          "expr": "sum(rate(container_cpu_cfs_throttled_periods_total{container!=\"\",container!=\"POD\"}[1m])) by (pod) or vector(0)",
+          "legendFormat": "Pod {{pod}} Throttled Cycles",
+          "refId": "A"
+        }
+      ],
+      "title": "[S - Saturation] CPU Throttling Rate (Pod Limit Throttles)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "Prometheus" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 1 },
+              { "color": "red", "value": 5 }
+            ]
+          },
+          "unit": "short"
+        }
+      },
+      "gridPos": { "h": 6, "w": 12, "x": 12, "y": 36 },
+      "id": 15,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }
+      },
+      "targets": [
+        {
+          "expr": "sum(increase(kube_pod_container_status_restarts_total[1h])) by (pod) or vector(0)",
+          "legendFormat": "{{pod}}",
+          "refId": "A"
+        }
+      ],
+      "title": "[E - Errors] Pod Restarts Count (Crash / OOMKilled)",
+      "type": "stat"
+    },
+    {
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 42 },
+      "id": 104,
+      "title": "🚀 [RED Method] GitOps & CI/CD Delivery Pipeline (ArgoCD & Continuous Delivery)",
+      "type": "row"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "Prometheus" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "blue", "value": 1 }
+            ]
+          },
+          "unit": "short"
+        }
+      },
+      "gridPos": { "h": 5, "w": 8, "x": 0, "y": 43 },
+      "id": 16,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }
+      },
+      "targets": [
+        {
+          "expr": "sum(argocd_app_sync_total{phase=\"Succeeded\"}) or vector(0)",
+          "refId": "A"
+        }
+      ],
+      "title": "[R - Rate] ArgoCD Successful Sync Operations",
+      "type": "stat"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "Prometheus" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "red", "value": 1 }
+            ]
+          },
+          "unit": "short"
+        }
+      },
+      "gridPos": { "h": 5, "w": 8, "x": 8, "y": 43 },
+      "id": 17,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }
+      },
+      "targets": [
+        {
+          "expr": "sum(argocd_app_sync_total{phase=\"Failed\"}) or sum(argocd_app_info{health_status!=\"Healthy\"}) or vector(0)",
+          "refId": "A"
+        }
+      ],
+      "title": "[E - Errors] ArgoCD Failed Sync / Degraded Health",
+      "type": "stat"
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "Prometheus" },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "smooth",
+            "fillOpacity": 15
+          },
+          "unit": "s"
+        }
+      },
+      "gridPos": { "h": 5, "w": 8, "x": 16, "y": 43 },
+      "id": 18,
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum(rate(argocd_git_request_duration_seconds_bucket[5m])) by (le)) or vector(0)",
+          "legendFormat": "P95 Git Latency",
+          "refId": "A"
+        }
+      ],
+      "title": "[D - Duration] GitOps Sync & Git Fetch Duration",
       "type": "timeseries"
     }
   ],
   "refresh": "5s",
   "schemaVersion": 39,
-  "tags": ["godevops", "production", "observability"],
+  "tags": ["godevops", "production", "observability", "red", "use", "k8s", "gitops"],
   "time": { "from": "now-15m", "to": "now" },
   "timepicker": {
     "refresh_intervals": ["5s", "10s", "30s", "1m"]
@@ -224,5 +620,5 @@
   "timezone": "browser",
   "title": "GoDevOps Enterprise Observability",
   "uid": "godevops-prod-overview",
-  "version": 1
+  "version": 3
 }
